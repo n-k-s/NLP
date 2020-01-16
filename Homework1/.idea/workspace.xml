@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72e131cf-bed4-4dc6-a2d0-7ce3edca4038" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stat.py" beforeDir="false" afterPath="$PROJECT_DIR$/stat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/most_times.py" beforeDir="false" afterPath="$PROJECT_DIR$/most_times.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +19,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="ProjectId" id="1WS1TaX4cWhB0aeMaSJaXMj28pD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -33,6 +33,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RunManager" selected="Python.stat">
     <configuration name="most_times" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -115,18 +116,34 @@
       <workItem from="1579128202390" duration="6278000" />
       <workItem from="1579134547252" duration="147000" />
       <workItem from="1579134793628" duration="1085000" />
-      <workItem from="1579196146387" duration="43000" />
+      <workItem from="1579196146387" duration="1191000" />
     </task>
+    <task id="LOCAL-00001" summary="edits">
+      <created>1579196219224</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579196219224</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="edits" />
+    <option name="LAST_COMMIT_MESSAGE" value="edits" />
   </component>
   <component name="WindowStateProjectService">
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579134589939">
       <screen x="0" y="0" width="1280" height="690" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.690@0.0.1280.690" timestamp="1579134589939" />
+    <state x="262" y="0" key="CommitChangelistDialog2" timestamp="1579196217716">
+      <screen x="0" y="0" width="1280" height="690" />
+    </state>
+    <state x="262" y="0" key="CommitChangelistDialog2/0.0.1280.690@0.0.1280.690" timestamp="1579196217716" />
     <state width="407" height="563" key="GridCell.Tab.0.bottom" timestamp="1579196190517">
       <screen x="0" y="0" width="1280" height="690" />
     </state>
@@ -143,10 +160,18 @@
       <screen x="0" y="0" width="1280" height="690" />
     </state>
     <state width="407" height="563" key="GridCell.Tab.0.right/0.0.1280.690@0.0.1280.690" timestamp="1579196190517" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1579196264064">
+      <screen x="0" y="0" width="1280" height="690" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.690@0.0.1280.690" timestamp="1579196264064" />
     <state x="336" y="169" key="com.intellij.ide.util.TipDialog" timestamp="1579196148235">
       <screen x="0" y="0" width="1280" height="690" />
     </state>
     <state x="336" y="169" key="com.intellij.ide.util.TipDialog/0.0.1280.690@0.0.1280.690" timestamp="1579196148235" />
+    <state x="448" y="262" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1579197624937">
+      <screen x="0" y="0" width="1280" height="690" />
+    </state>
+    <state x="448" y="262" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.690@0.0.1280.690" timestamp="1579197624937" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Homework1$most_times.coverage" NAME="most_times Coverage Results" MODIFIED="1579134858672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
