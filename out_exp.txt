@@ -1,0 +1,4 @@
+Processing Apples
+Processing Banannas
+Processing Milk
+total is 27.740000000000002
