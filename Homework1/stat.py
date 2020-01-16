@@ -1,3 +1,6 @@
+import math
+
+
 def avg(X):
     tempAvg = 0
     for i in range(0, len(X)):
@@ -19,4 +22,12 @@ print(l_sqr(myNum))
 
 
 def var(X):
-    return 1
+    print("In var")
+    numAvg = avg(X)
+    sum = 0
+    a = [i - numAvg for i in X]
+    b = l_sqr(a)
+    c = math.fsum(b)
+    return (c / len(X))
+
+print(var([23, 32, 43, 54]) == 135.5)
