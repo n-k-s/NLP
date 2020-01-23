@@ -1,29 +1,31 @@
 import re
 import pprint
+
+def fileToString(f):
+    a = ""
+    for i in f:
+        if (i[0] != "#"):
+            a += i
+    a = re.sub("[#].*", "", a)
+    a = re.sub("\t", " ", a)
+
+    return a
+
+def stringtoList(str):
+    myList = str.split("\n")
+    for i in myList:
+        if len(i) == 0:
+            myList.remove(i)
+    return myList
+
+
 f = open("grammar.txt")
 
-#####i.match([#].*)
-a = ""
-
-# putting the file in a string that doesn't start with a #
-for i in f:
-    if (i[0] != "#"):
-        a += i
-print(a)
-
-myList = a.split("\n")
 
 
-
-
-#
-# b = [i for i in a if ]
-#
-# b=[i**2 for i in a]
-# print(a)
-
-
-
+a = fileToString(f)
+myList = stringtoList(a)
+pprint.pprint(myList)
 
 
 
