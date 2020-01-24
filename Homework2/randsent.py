@@ -58,16 +58,25 @@ def fileFormatting(f):
 
 
 ################# Start of logic :^) #############################
-
+def isTerminal(mySentence, dictionary):
+    for i in mySentence:
+        if (i in dictionary):
+            return False
+    return True
 
 ################# END OF LOGIC ###################################
 
 # argv 0 program name, 1 filename, 2 number of sentences
 #f = open(argv[1])
+#times = argv[2]
+#print(times)
+
 
 f = open("grammar.txt")
 myDict = fileFormatting(f)
 pprint.pprint(myDict)
+
+# while (not isTerminal())
 
 
 
