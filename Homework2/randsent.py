@@ -1,5 +1,6 @@
 import re
 import pprint
+from random import randrange
 from sys import argv
 #################### File Formatting ######################
 def fileToString(f):
@@ -63,6 +64,9 @@ def isTerminal(mySentence, dictionary):
         if (i in dictionary):
             return False
     return True
+def buildSentence(list, dict):
+    # returns a list of words from the given list passed in
+    return list[randrange(len(list))].split(" ")
 
 ################# END OF LOGIC ###################################
 
@@ -76,7 +80,16 @@ f = open("grammar.txt")
 myDict = fileFormatting(f)
 pprint.pprint(myDict)
 
-# while (not isTerminal())
+sentence = buildSentence(myDict["ROOT"], myDict)
+print(sentence)
+
+sentence[0] = buildSentence(sentence[0], myDict)
+print(sentence)
+
+# while (not isTerminal(sentence, myDict)):
+#     buildSentence(sentence[i])
+#     i += 1
+#     print(sentence)
 
 
 
