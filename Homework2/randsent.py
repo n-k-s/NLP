@@ -1,5 +1,6 @@
 import re
 import pprint
+from sys import argv
 #################### File Formatting ######################
 def fileToString(f):
     a = ""
@@ -25,10 +26,20 @@ def popUseless(myList):
 def listToDict(myList):
     grammarDictionary = {}
     for i in myList:
-        if (i[0] not in grammarDictionary):
-            grammarDictionary[i[0]] = [i[1]]
+        if (i[0] == "1"):
+            if (i[1] not in grammarDictionary):
+                grammarDictionary[i[1]] = [i[2]]
+            else:
+                grammarDictionary[i[1]].append(i[2])
         else:
-            grammarDictionary[i[0]].append(i[1])
+            if (i[1] not in grammarDictionary):
+                grammarDictionary[i[1]] = [i[2]]
+                for j in range(int(i[0]) - 1 ):
+                    grammarDictionary[i[1]].append(i[2])
+            else:
+                for j in range(int(i[0])):
+                    grammarDictionary[i[1]].append(i[2])
+
     return grammarDictionary
 
 # the method that calls all the other formatting methods
@@ -42,22 +53,24 @@ def fileFormatting(f):
     newList = []
     for idx, i in enumerate(myList):
         newList.append(i.split("\t"))
-    newList = popUseless(newList)
     return listToDict(newList)
 ################## END OF FILE FORMATTING#########################
 
+
+################# Start of logic :^) #############################
+
+
+################# END OF LOGIC ###################################
+
+# argv 0 program name, 1 filename, 2 number of sentences
+#f = open(argv[1])
+
 f = open("grammar.txt")
 myDict = fileFormatting(f)
+pprint.pprint(myDict)
 
 
 
-phrase = myDict["NP"][0].split(" ")
-print(myDict["Verb"])
-print(len(myDict["Verb"]))
-#pprint.pprint(myDict)
-print("##############################################")
-
-print(phrase)
 
 
 
