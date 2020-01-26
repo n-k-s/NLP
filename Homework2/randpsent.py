@@ -31,11 +31,22 @@ def popUseless(myList):
 def listToDict(myList):
     grammarDictionary = {}
     for i in myList:
+        if (i[0] == "1"):
             if (i[1] not in grammarDictionary):
                 grammarDictionary[i[1]] = [i[2]]
             else:
                 grammarDictionary[i[1]].append(i[2])
+        else:
+            if (i[1] not in grammarDictionary):
+                grammarDictionary[i[1]] = [i[2]]
+                for j in range(int(i[0]) - 1 ):
+                    grammarDictionary[i[1]].append(i[2])
+            else:
+                for j in range(int(i[0])):
+                    grammarDictionary[i[1]].append(i[2])
+
     return grammarDictionary
+
 # the method that calls all the other formatting methods
 def fileFormatting(f):
     #removes nothingness, creates a list within the list and splits on the tab character
@@ -91,10 +102,7 @@ f = open(argv[1])
 times = argv[2]
 
 myDict = fileFormatting(f)
-pprint.pprint(myDict)
-print("")
-print("")
-print("")
+#pprint.pprint(myDict)
 
 for i in range(int(times)):
     sentence = buildSentence("ROOT", myDict)
