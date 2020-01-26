@@ -60,14 +60,37 @@ def fileFormatting(f):
 
 ################# Start of logic :^) #############################
 def isTerminal(mySentence, dictionary):
+    #takes in a list of words, checks each one
     for i in mySentence:
         if (i in dictionary):
             return False
     return True
-def buildSentence(list, dict):
+def buildSentence(word, dict):
     # returns a list of words from the given list passed in
-    return list[randrange(len(list))].split(" ")
-
+    #return list[randrange(len(list))].split(" ")
+    # print("Being passed in ")
+    # print(type(word))
+    # print(word)
+    if word not in dict:
+        # print("not in dictionary")
+        return word
+    else:
+        # returns a random string from the given dictionary key
+        # print("in dictionary")
+        # print(myDict[word][randrange(len(myDict[word]))])
+        return(myDict[word][randrange(len(myDict[word]))])
+def stringToListSplitterOnSpace(sentence):
+    return sentence.split(" ")
+def listToString(list):
+    temp = ""
+    for i in list:
+        temp += i + " "
+    return temp
+def emptyElementInList(list):
+    for i in list:
+        if len(i) == 0:
+            list.remove(i)
+    return list
 ################# END OF LOGIC ###################################
 
 # argv 0 program name, 1 filename, 2 number of sentences
@@ -75,16 +98,46 @@ def buildSentence(list, dict):
 #times = argv[2]
 #print(times)
 
-
 f = open("grammar.txt")
 myDict = fileFormatting(f)
 pprint.pprint(myDict)
 
-sentence = buildSentence(myDict["ROOT"], myDict)
+print("")
+print("")
+print("")
+print("##### Building the initial sentence #####")
+
+sentence = buildSentence("ROOT", myDict)
+print(sentence)
+a = stringToListSplitterOnSpace(sentence)
+print(a)
+
+print("")
+print("")
+print("")
+print("######## TESTING BUILDING SENTENCES ########")
+sentenceAsList = stringToListSplitterOnSpace(sentence)
+# if 1 == 1:
+while not isTerminal(sentenceAsList, myDict):
+    newSentence = ""
+    sentenceAsList = stringToListSplitterOnSpace(sentence)
+    # print(sentenceAsList)
+
+    for i in sentenceAsList:
+        temp = buildSentence(i, myDict)
+        newSentence += temp + " "
+    # print(newSentence)
+    sentence = newSentence
+    sentenceAsList = sentence.split(" ")
+
+
+print("")
+print("")
+print("")
+sentence = listToString(sentenceAsList)
 print(sentence)
 
-sentence[0] = buildSentence(sentence[0], myDict)
-print(sentence)
+
 
 # while (not isTerminal(sentence, myDict)):
 #     buildSentence(sentence[i])
