@@ -92,9 +92,6 @@ times = argv[2]
 
 myDict = fileFormatting(f)
 pprint.pprint(myDict)
-print("")
-print("")
-print("")
 
 for i in range(int(times)):
     sentence = buildSentence("ROOT", myDict)
@@ -112,5 +109,7 @@ for i in range(int(times)):
     print(sentence)
     print("")
     print("")
+
+
 
 f.close()
