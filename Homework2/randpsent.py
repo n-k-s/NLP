@@ -31,7 +31,7 @@ def popUseless(myList):
 def listToDict(myList):
     grammarDictionary = {}
     for i in myList:
-        # weight == 1 
+        # weight == 1
         if (i[0] == "1"):
             if (i[1] not in grammarDictionary):
                 grammarDictionary[i[1]] = [i[2]]

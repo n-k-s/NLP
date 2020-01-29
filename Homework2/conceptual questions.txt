@@ -4,7 +4,7 @@ Context Free Grammar Conceptual Questions
 	NP leads into NP PP. PP also leads into another NP. The solution would be to weight non looping sentences heavier than looping sentences.
 	If NP -> DT Noun was twice as likely as NP -> NP PP, the amount of long sentences would be less likely.
 	
-2.	There is at least 3 ways to construct that sentnece. It follows the structure of NP -> NP PP which can loop into itsself so you can have it branch
+2.	There is at least 3 ways to construct that sentence. It follows the structure of NP -> NP PP which can loop into itself so you can have it branch
 	down
 	NP -> NP PP
 		NP -> DT (Every) Noun (sandwich)
