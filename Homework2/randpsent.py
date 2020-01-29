@@ -31,11 +31,13 @@ def popUseless(myList):
 def listToDict(myList):
     grammarDictionary = {}
     for i in myList:
+        # weight == 1 
         if (i[0] == "1"):
             if (i[1] not in grammarDictionary):
                 grammarDictionary[i[1]] = [i[2]]
             else:
                 grammarDictionary[i[1]].append(i[2])
+        # weight != 1
         else:
             if (i[1] not in grammarDictionary):
                 grammarDictionary[i[1]] = [i[2]]
@@ -94,7 +96,7 @@ f = open(argv[1])
 times = argv[2]
 
 myDict = fileFormatting(f)
-pprint.pprint(myDict)
+#pprint.pprint(myDict)
 
 for i in range(int(times)):
     sentence = buildSentence("ROOT", myDict)

@@ -60,17 +60,10 @@ def isTerminal(mySentence, dictionary):
     return True
 def buildSentence(word, dict):
     # returns a list of words from the given list passed in
-    #return list[randrange(len(list))].split(" ")
-    # print("Being passed in ")
-    # print(type(word))
-    # print(word)
     if word not in dict:
-        # print("not in dictionary")
         return word
     else:
         # returns a random string from the given dictionary key
-        # print("in dictionary")
-        # print(myDict[word][randrange(len(myDict[word]))])
         return(myDict[word][randrange(len(myDict[word]))])
 def stringToListSplitterOnSpace(sentence):
     return sentence.split(" ")
@@ -91,7 +84,7 @@ f = open(argv[1])
 times = argv[2]
 
 myDict = fileFormatting(f)
-pprint.pprint(myDict)
+#pprint.pprint(myDict)
 
 for i in range(int(times)):
     sentence = buildSentence("ROOT", myDict)
