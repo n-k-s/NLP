@@ -94,7 +94,7 @@ f = open(argv[1])
 times = argv[2]
 
 myDict = fileFormatting(f)
-#pprint.pprint(myDict)
+pprint.pprint(myDict)
 
 for i in range(int(times)):
     sentence = buildSentence("ROOT", myDict)

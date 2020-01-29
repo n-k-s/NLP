@@ -1,0 +1,21 @@
+Nolan Shikanai
+Context Free Grammar Conceptual Questions
+1.	The first problem generates so many long sentences because there are endless loops.
+	NP leads into NP PP. PP also leads into another NP. The solution would be to weight non looping sentences heavier than looping sentences.
+	If NP -> DT Noun was twice as likely as NP -> NP PP, the amount of long sentences would be less likely.
+	
+2.	There is at least 3 ways to construct that sentnece. It follows the structure of NP -> NP PP which can loop into itsself so you can have it branch
+	down
+	NP -> NP PP
+		NP -> DT (Every) Noun (sandwich)
+		PP -> Prep (with) NP  (break HERE)
+			NP -> NP PP
+				NP - > DT (a) Noun (pickle)
+				PP -> prep (on) NP
+					NP -> NP PP
+						NP -> DT (th) Noun (floor)
+						PP -> prep (under) NP
+							NP -> DT(the) Noun(cheif of staff)
+	the first way follows a branching structure where the left half leads to terminals and the right half keeps extending in the endless loop
+	But you can also turn the NP into NP PP and turn that NP into another NP PP so you can change the structure and reach the same sentence with a different path
+			
