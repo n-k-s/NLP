@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Context Free Grammars """
-__author__="Nolan Shikanai"
+__author__= "Nolan Shikanai"
 
 import re
 import pprint
