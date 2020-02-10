@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+""" PMI """
+__author__="Nolan Shikanai"
 from collections import Counter
 import collections
 import re
@@ -36,7 +39,7 @@ for i in c.most_common():
 for i in biGrams.most_common():
     outputString += i[0] + "\t" + str(i[1]) + "\n"
 outputString = re.sub(" ", "_", outputString)
-outputString += "@@@total@@@" + "\t" + str(wordCount)
+outputString += "@total@" + "\t" + str(wordCount)
 #print(outputString)
 toFile = open(exportFile, "w")
 toFile.write(outputString)
