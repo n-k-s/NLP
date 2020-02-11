@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ PMI """
-__author__="Nolan Shikanai"
+__author__ = "Nolan Shikanai"
 
 from collections import Counter
 import collections
@@ -9,12 +9,15 @@ from pprint import pprint
 from sys import argv
 import math
 
+
 def regexMaker(word):
     return "^" + word + "\t"
 
-def count(i):
-    splitter = i.split("\t")
-    return splitter[1].replace("\n","")
+
+def count(foundWord):
+    splitter = foundWord.split("\t")
+    return splitter[1].replace("\n", "")
+
 
 # argv 0 program name, 1 filename, 2 first word, 3 second word
 
@@ -29,20 +32,19 @@ firstWord = 0
 secondWord = 0
 
 for i in f:
-    if(re.match(bigramRegex, i)):
+    if re.match(bigramRegex, i):
         biGramWord = count(i)
-    if(re.match("@total@", i)):
+    if re.match("@total@", i):
         totalWord = count(i)
-    if(re.match(firstWordRegex, i)):
+    if re.match(firstWordRegex, i):
         firstWord = count(i)
-    if (re.match(secondWordRegex, i)):
+    if re.match(secondWordRegex, i):
         secondWord = count(i)
 
 print("bigram: " + biGramWord)
 print("total words: " + totalWord)
 print("first word: " + firstWord)
 print("second word: " + secondWord)
-
 
 pmi = math.log2((int(biGramWord) * int(totalWord)) / (int(firstWord) * int(secondWord)))
 
