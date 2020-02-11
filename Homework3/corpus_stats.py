@@ -10,7 +10,7 @@ from sys import argv
 
 def fileReading(fileName):
     with open(fileName) as i:
-        c = i.read().lower().replace("`","").replace("'s","").replace("(","").replace(")","").replace(";","").replace(":","").split()
+        c = i.read().lower().replace(".","").replace("`","").replace("'s","").replace("(","").replace(")","").replace(";","").replace(":","").replace("  "," ").replace(" - ", "").replace(" . ", "").replace(" ! ", "").replace(" * ", "").split()
     return c
 def ngrams(text, n):
     return ['_'.join(text[i:i + n]) for i in range(len(text) - n + 1)]
