@@ -32,19 +32,20 @@ for i in f:
     if(re.match(bigramRegex, i)):
         biGramWord = count(i)
     if(re.match("@total@", i)):
-        totalWords = count(i)
+        totalWord = count(i)
     if(re.match(firstWordRegex, i)):
         firstWord = count(i)
     if (re.match(secondWordRegex, i)):
         secondWord = count(i)
 
 print("bigram: " + biGramWord)
-print("total words: " + totalWords)
+print("total words: " + totalWord)
 print("first word: " + firstWord)
 print("second word: " + secondWord)
 
-pmi = math.log2((int(biGramWord) * 12) / (int(firstWord) * int(secondWord)))
-print(pmi)
 
+pmi = math.log2((int(biGramWord) * int(totalWord)) / (int(firstWord) * int(secondWord)))
+
+print(pmi)
 
 f.close()
