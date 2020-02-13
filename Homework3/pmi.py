@@ -41,10 +41,10 @@ for i in f:
     if re.match(secondWordRegex, i):
         secondWord = count(i)
 
-print("bigram: " + biGramWord)
-print("total words: " + totalWord)
-print("first word: " + firstWord)
-print("second word: " + secondWord)
+# print("bigram: " + biGramWord)
+# print("total words: " + totalWord)
+# print("first word: " + firstWord)
+# print("second word: " + secondWord)
 
 pmi = math.log2((int(biGramWord) * int(totalWord)) / (int(firstWord) * int(secondWord)))
 
