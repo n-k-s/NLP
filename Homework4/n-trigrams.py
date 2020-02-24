@@ -10,8 +10,16 @@ from sys import argv
 
 
 def ngrams(text, n):
-    return [' '.join(text[i:i + n]) for i in range(len(text) - n + 1)]
-
+    if (n == 1):
+        return [' '.join(text[i:i + n]) for i in range(len(text) - n + 1)]
+    else:
+        text = gramFormatter(text, n)
+        return [' '.join(text[i:i + n]) for i in range(len(text) - n + 1)]
+def gramFormatter(list, n):
+    for i in list:
+        for i in range(n):
+            i.insert(0 ,"*")
+    return i
 def cleanNoise(theList):
     a = []
     for i in theList:
@@ -31,12 +39,15 @@ def listOfLists(list):
         a.append(b)
     return a
 def splitToSentences(text):
-
+    return re.split("[.!?][ ]|[\r\n]+", text)
 def clean(text):
+    # takes the text as a long string, converts to lists divided by sentences, divided into words
     list = splitToSentences(text)
     list = cleanNoise(list)
     list = emptyListElement(list)
     list = listOfLists(list)
+    for i in list:
+        emptyListElement(i)
     return list
 
 
@@ -45,17 +56,13 @@ def clean(text):
 importFile = open(argv[1])
 exportFile = argv[2]
 text = importFile.read()
-sentences = clean(re.split("[.!?][ ]|[\r\n]+", text))
+sentences = clean(text)
 
-
-pprint(sentences)
+print(sentences)
 
 # print(b[-1])
 # export = open(exportFile, "w")
-#
 # export.write("")
-#
-#
-#
+
 # export.close()
 importFile.close()
