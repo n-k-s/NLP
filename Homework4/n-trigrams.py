@@ -80,11 +80,19 @@ for i in sentences:
     for j in i:
         allgrams += j + " "
 a = Counter(allgrams.split())
-print(a)
 export = open(exportFile, "w", encoding="utf8")
-for i in a.most_common():
-    print(i[1])
-    export.write(i[0] + "\t" + str(i[1]) + "\n")
+# for i in a.most_common():
+#     export.write(i[0] + "\t" + str(i[1]) + "\n")
+startSentence(sentences)
+bigrams = []
+for i in sentences:
+    bigrams.append(ngrams(i, 2))
+for i in bigrams:
+    for j in i:
+        allgrams += j + " "
+pprint(allgrams)
+
+
 
 
 
