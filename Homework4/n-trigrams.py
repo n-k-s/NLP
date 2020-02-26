@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" n-trigrams """
+""" n-gram models """
 __author__ = "Nolan Shikanai"
 
 from collections import Counter
@@ -29,7 +29,7 @@ def startSentence(list):
 def cleanNoise(theList):
     a = []
     for i in theList:
-        i = i.replace("'s", "").replace("*", "").replace("~", "").replace(":", "").replace(",","").replace("_","").replace("--","")
+        i = i.replace("'s", "").replace("*", "").replace("~", "").replace(":", "").replace(",","").replace("_","").replace("--","").replace(' " ', "").replace('" ', "").replace(' "', "").replace('"','').replace("  ", " ")
         a.append(i)
     return a
 
@@ -51,7 +51,7 @@ def listOfLists(list):
 
 
 def splitToSentences(text):
-    return re.split("[.!?][ ]|[\r\n]+", text)
+    return re.split("[.!?][ ]|[\r\n]+|[.]$", text)
 
 
 def clean(text):
@@ -79,18 +79,39 @@ allgrams = ""
 for i in sentences:
     for j in i:
         allgrams += j + " "
-a = Counter(allgrams.split())
+unigrammies = Counter(allgrams.split())
 export = open(exportFile, "w", encoding="utf8")
-# for i in a.most_common():
-#     export.write(i[0] + "\t" + str(i[1]) + "\n")
+
+# # Bigrams
 startSentence(sentences)
 bigrams = []
 for i in sentences:
     bigrams.append(ngrams(i, 2))
+bigrammies = []
 for i in bigrams:
     for j in i:
-        allgrams += j + " "
-pprint(allgrams)
+        bigrammies.append(j)
+
+# # Trigrams
+startSentence(sentences)
+trigrams = []
+for i in sentences:
+    trigrams.append(ngrams(i, 3))
+trigrammies = []
+for i in trigrams:
+    for j in i:
+        trigrammies.append(j)
+
+# # writing to file
+for i in unigrammies.most_common():
+    export.write(str(i[0]) + "\t" + str(i[1]) + "\n")
+for i in Counter(bigrammies).most_common():
+    export.write(str(i[0]) + "\t" + str(i[1]) + "\n")
+for i in Counter(trigrammies).most_common():
+    export.write(str(i[0]) + "\t" + str(i[1]) + "\n")
+#print(Counter(bigrammies).most_common()[6][1])
+
+
 
 
 
