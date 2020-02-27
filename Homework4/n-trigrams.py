@@ -29,7 +29,7 @@ def startSentence(list):
 def cleanNoise(theList):
     a = []
     for i in theList:
-        i = i.replace("'s", "").replace("*", "").replace("~", "").replace(":", "").replace(",","").replace("_","").replace("--","").replace(' " ', "").replace('" ', "").replace(' "', "").replace('"','').replace("  ", "").replace("   ", "")
+        i = i.lower().replace("'s", "").replace("*", "").replace("~", "").replace(":", "").replace(",","").replace("_","").replace("--","").replace(' " ', "").replace('" ', "").replace(' "', "").replace('"','').replace("  ", "").replace("   ", "")
         a.append(i)
     return a
 
