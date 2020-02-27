@@ -50,7 +50,7 @@ def listOfLists(theList):
 
 # argv 0 program name, 1 model file, 2 sentences file
 modelFile = open(argv[1], encoding="utf8")
-sentences = open(argv[2], encoding="utf8").read()
+sentences = open(argv[2], encoding="utf8").read().lower()
 # modelFile = open("a.txt")
 # sentences = open("sentences-file.txt").read()
 
