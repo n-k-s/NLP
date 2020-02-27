@@ -49,10 +49,17 @@ def listOfLists(theList):
 
 
 # argv 0 program name, 1 model file, 2 sentences file
-modelFile = open(argv[1], encoding="utf8")
-sentences = open(argv[2], encoding="utf8").read()
-# modelFile = open("a.txt")
-# sentences = open("sentences-file.txt").read()
+# modelFile = open(argv[1], encoding="utf8")
+# sentences = open(argv[2], encoding="utf8")
+# bigramSentence = open(argv[2], encoding="utf8")
+
+modelFile = open("a.txt")
+sentences = open("sentences-file.txt").read()
+bigramSentence = open("sentences-file.txt").read()
+
+bigramSentence = splitToSentences(bigramSentence)
+bigramSentence = removeEmpty(bigramSentence)
+bigramSentence = listOfLists(bigramSentence)
 
 splitSentences = splitToSentences(sentences)
 splitSentences = removeEmpty(splitSentences)
@@ -92,9 +99,9 @@ for n, i in enumerate(modelFile):
 testingSentences = removeEmpty(splitToSentences(sentences))
 sentenceCount = []
 
-# print("Unigram: " + str(unigramStart) + " " + str(unigramEnd))
-# print("bigram: " + str(bigramStart) + " " + str(bigramEnd))
-# print("trigram: " + str(trigramStart) + " through end of file")
+print("Unigram: " + str(unigramStart) + " " + str(unigramEnd))
+print("bigram: " + str(bigramStart) + " " + str(bigramEnd))
+print("trigram: " + str(trigramStart) + " through end of file")
 unigramCount = ""
 bigramCount = ""
 trigramCount = ""
@@ -134,6 +141,7 @@ for i in bigramCount:
 for i in bigramPreDict:
     if len(i) > 1:
         bigramDict[i[0]] = int(i[1])
+# print(bigramPreDict)
 
 # trigram dict
 trigramDict = {}
@@ -152,39 +160,66 @@ endSentence(splitSentences)
 startSentence(splitSentences)
 startSentence(splitSentences)
 # print(splitSentences)
+
+
+print(splitSentences)
+sentenceBiGrams = []
+sentenceBiGramsFixed = []
+for n, i in enumerate(splitSentences):
+    sentenceBiGrams.append([])
+    sentenceBiGrams[n].append(ngrams(i, 2))
+
+
 sentenceTriGrams = []
 sentenceTriGramsFixed = []
 for n, i in enumerate(splitSentences):
     sentenceTriGrams.append([])
     sentenceTriGrams[n].append(ngrams(i, 3))
 
+
+for i in range(len(sentenceBiGrams)):
+    sentenceBiGramsFixed.append(sentenceBiGrams[i][0])
 for i in range(len(sentenceTriGrams)):
     sentenceTriGramsFixed.append(sentenceTriGrams[i][0])
 
 numberOfSentences = unigramDict["STOP"]
 # print(sentenceTriGramsFixed)
+triLamda = .6
+biLamda = .4
+print(sentenceBiGramsFixed)
+# for n, i in enumerate(sentenceBiGramsFixed):
+#     for nj, j in enumerate(i):
+#         jsplit = j.split()
+#         temp = jsplit[0]
+#         if (temp == "*"):
+#             sentenceBiGramsFixed[n][nj] = (bigramDict[j] / numberOfSentences) * biLamda
+#         elif temp in bigramDict and j in trigramDict:
+#             sentenceTriGramsFixed[n][nj] = (bigramDict[j] / unigramDict[temp]) * biLamda
+#         else:
+#             sentenceTriGramsFixed[n][nj] = 0
+
 for n, i in enumerate(sentenceTriGramsFixed):
     for nj, j in enumerate(i):
         jsplit = j.split()
         temp = jsplit[0] + " " + jsplit[1]
         if (temp == "* *"):
-            sentenceTriGramsFixed[n][nj] = trigramDict[j] / numberOfSentences
+            sentenceTriGramsFixed[n][nj] = (trigramDict[j] / numberOfSentences) * triLamda
         elif temp in bigramDict and j in trigramDict:
-            sentenceTriGramsFixed[n][nj] = trigramDict[j] / bigramDict[temp]
+            sentenceTriGramsFixed[n][nj] = (trigramDict[j] / bigramDict[temp]) * triLamda
         else:
             sentenceTriGramsFixed[n][nj] = 0
-# print(len(sentenceTriGramsFixed))
+print(len(sentenceTriGramsFixed))
 finalProbability = []
 for i in sentenceTriGramsFixed:
     probability = 1
     for j in i:
         probability *= j
     finalProbability.append(probability)
+
+
 last = sentences.split('.')
-# print(finalProbability)
 for n, i in enumerate(finalProbability):
     print("Probability of: ")
     print(last[n])
     print(i)
     print()
-

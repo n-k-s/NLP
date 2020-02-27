@@ -109,19 +109,6 @@ for i in Counter(bigrammies).most_common():
     export.write(str(i[0]) + "\t" + str(i[1]) + "\n")
 for i in Counter(trigrammies).most_common():
     export.write(str(i[0]) + "\t" + str(i[1]) + "\n")
-#print(Counter(bigrammies).most_common()[6][1])
-
-
-
-
-
-
-
-# bigrams = ngrams(bigram, 2)
-# trigrams = ngrams(trigram, 3)
-
-
-
 
 export.close()
 importFile.close()
