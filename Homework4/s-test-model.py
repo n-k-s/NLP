@@ -50,8 +50,8 @@ def listOfLists(theList):
 
 # argv 0 program name, 1 model file, 2 sentences file
 modelFile = open(argv[1], encoding="utf8")
-sentences = open(argv[2], encoding="utf8")
-bigramSentence = open(argv[2], encoding="utf8")
+sentences = open(argv[2], encoding="utf8").read()
+bigramSentence = open(argv[2], encoding="utf8").read()
 
 # modelFile = open("a.txt")
 # sentences = open("sentences-file.txt").read()
@@ -194,7 +194,10 @@ for n, i in enumerate(sentenceBiGramsFixed):
         bisplit = j.split()
         temp = bisplit[0]
         if (temp == "*"):
-            sentenceBiGramsFixed[n][nj] = (bigramDict[j] / numberOfSentences) * biLamda
+            if j in bigramDict:
+                sentenceBiGramsFixed[n][nj] = (bigramDict[j] / numberOfSentences) * biLamda
+            else:
+                sentenceBiGramsFixed[n][nj] = 0.0
         elif temp in unigramDict and j in bigramDict:
             sentenceBiGramsFixed[n][nj] = (bigramDict[j] / unigramDict[temp]) * biLamda
         else:
@@ -206,7 +209,10 @@ for n, i in enumerate(sentenceTriGramsFixed):
         jsplit = j.split()
         temp = jsplit[0] + " " + jsplit[1]
         if (temp == "* *"):
-            sentenceTriGramsFixed[n][nj] = (trigramDict[j] / numberOfSentences) * triLamda
+            if j in trigramDict:
+                sentenceTriGramsFixed[n][nj] = (trigramDict[j] / numberOfSentences) * triLamda
+            else:
+                sentenceTriGramsFixed[n][nj] = 0
         elif temp in bigramDict and j in trigramDict:
             sentenceTriGramsFixed[n][nj] = (trigramDict[j] / bigramDict[temp]) * triLamda
         else:
