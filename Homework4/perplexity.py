@@ -184,9 +184,9 @@ for i in range(len(sentenceTriGrams)):
 
 numberOfSentences = unigramDict["STOP"]
 # print(sentenceTriGramsFixed)
-triLamda = .6
-biLamda = .4
-
+triLamda = .85
+biLamda = .10
+uniLamda = .05
 # print(sentenceBiGramsFixed)
 # print(sentenceTriGramsFixed)
 for n, i in enumerate(sentenceBiGramsFixed):
@@ -244,3 +244,6 @@ print(perplexity)
 perplexity = (1/m) * math.log2(perplexity)
 perplexity = 2 ** (-1 * perplexity)
 print(perplexity)
+
+###### if 0, change to 10e-10
+###### implement unigram lamda
