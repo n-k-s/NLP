@@ -52,10 +52,21 @@ def listOfLists(theList):
 modelFile = open(argv[1], encoding="utf8")
 sentences = open(argv[2], encoding="utf8").read().lower()
 bigramSentence = open(argv[2], encoding="utf8").read().lower()
+unigramSentence = open(argv[2], encoding="utf8").read().lower()
+uni = unigramSentence = open(argv[2], encoding="utf8").read().lower()
+uni = splitToSentences(uni)
+uni = listOfLists(uni)
+endSentence(uni)
+# print(uni)
 
 # modelFile = open("a.txt")
 # sentences = open("sentences-file.txt").read()
 # bigramSentence = open("sentences-file.txt").read()
+
+unigramSentence = splitToSentences(unigramSentence)
+unigramSentence = removeEmpty(unigramSentence)
+unigramSentence = listOfLists(unigramSentence)
+
 
 bigramSentence = splitToSentences(bigramSentence)
 bigramSentence = removeEmpty(bigramSentence)
@@ -65,6 +76,7 @@ bigramSentence = listOfLists(bigramSentence)
 splitSentences = splitToSentences(sentences)
 splitSentences = removeEmpty(splitSentences)
 splitSentences = listOfLists(splitSentences)
+
 unigram = []
 bigram = []
 trigram = []
@@ -142,7 +154,7 @@ for i in bigramCount:
 for i in bigramPreDict:
     if len(i) > 1:
         bigramDict[i[0]] = int(i[1])
-# print(bigramPreDict)
+
 
 # trigram dict
 trigramDict = {}
@@ -157,12 +169,23 @@ for i in trigramPreDict:
         trigramCount += int(i[1])
         trigramDict[i[0]] = int(i[1])
 
+endSentence(unigramSentence)
+
 endSentence(bigramSentence)
 startSentence(bigramSentence)
 
 endSentence(splitSentences)
 startSentence(splitSentences)
 startSentence(splitSentences)
+
+sentenceUniGrams = []
+sentenceUniGramsFixed = []
+for n, i in enumerate(unigramSentence):
+    sentenceUniGrams.append([])
+    sentenceUniGrams[n].append(ngrams(i, 1))
+
+
+
 sentenceBiGrams = []
 sentenceBiGramsFixed = []
 for n, i in enumerate(bigramSentence):
@@ -177,6 +200,8 @@ for n, i in enumerate(splitSentences):
     sentenceTriGrams[n].append(ngrams(i, 3))
 
 
+for i in range(len(sentenceUniGrams)):
+    sentenceUniGramsFixed.append(sentenceBiGrams[i][0])
 for i in range(len(sentenceBiGrams)):
     sentenceBiGramsFixed.append(sentenceBiGrams[i][0])
 for i in range(len(sentenceTriGrams)):
@@ -187,6 +212,22 @@ numberOfSentences = unigramDict["STOP"]
 triLamda = .85
 biLamda = .10
 uniLamda = .05
+
+for n, i in enumerate(uni):
+    for nj, j in enumerate(i):
+        bisplit = j.split()
+        temp = bisplit[0]
+        # if (temp == "*"):
+        #     if j in unigramDict:
+        #         sentenceUniGramsFixed[n][nj] = (unigramDict[j] / totalWords) * uniLamda
+        #     else:
+        #         sentenceUniGramsFixed[n][nj] = 0.0
+        if temp in unigramDict:
+            uni[n][nj] = (unigramDict[j] / totalWords) * uniLamda
+        else:
+            uni[n][nj] = 0
+
+
 # print(sentenceBiGramsFixed)
 # print(sentenceTriGramsFixed)
 for n, i in enumerate(sentenceBiGramsFixed):
@@ -202,6 +243,7 @@ for n, i in enumerate(sentenceBiGramsFixed):
             sentenceBiGramsFixed[n][nj] = (bigramDict[j] / unigramDict[temp]) * biLamda
         else:
             sentenceBiGramsFixed[n][nj] = 0
+
 
 # print(sentenceBiGramsFixed)
 for n, i in enumerate(sentenceTriGramsFixed):
@@ -220,30 +262,37 @@ for n, i in enumerate(sentenceTriGramsFixed):
 # print(len(sentenceTriGramsFixed))
 # print(sentenceBiGramsFixed)
 # print(sentenceTriGramsFixed)
-
+for i in uni:
+    if len(uni) == 1:
+        uni.append(0)
 finalProbability = []
 for n, i in enumerate(sentenceTriGramsFixed):
     probability = 1
     for nj, j in enumerate(i):
-        total = j + sentenceBiGramsFixed[n][nj]
+        try:
+            uni[n][nj]
+        except IndexError:
+            uni.append(10 ** -10)
+            uni[n].append(10 ** -10)
+        total = j + sentenceBiGramsFixed[n][nj] + uni[n][nj]
         probability *= total
     finalProbability.append(probability)
 
 
 last = sentences.split('.')
-for n, i in enumerate(finalProbability):
-    print("Probability of: ")
-    print(last[n])
-    print(i)
-    print()
+# for n, i in enumerate(finalProbability):
+#     print("Probability of: ")
+#     print(last[n])
+#     print(i)
+#     print()
+
 m = len(open(argv[2]).read().split())
 perplexity = 0
 for i in finalProbability:
-    perplexity += i
-print(perplexity)
+    if i == 0:
+        perplexity *= 10 ** -10
+    else:
+        perplexity += i
 perplexity = (1/m) * math.log2(perplexity)
 perplexity = 2 ** (-1 * perplexity)
 print(perplexity)
-
-###### if 0, change to 10e-10
-###### implement unigram lamda
