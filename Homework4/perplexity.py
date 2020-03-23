@@ -120,7 +120,7 @@ bigramCount = ""
 trigramCount = ""
 
 # open(argv[1], encoding="utf8")
-for n, i in enumerate(open("a.txt")):
+for n, i in enumerate(open(argv[1], encoding="utf8")):
     if n < unigramEnd:
         unigramCount += i
     elif n < bigramEnd:
