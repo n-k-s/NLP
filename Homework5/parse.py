@@ -57,7 +57,10 @@ def sentence_formatting(list_of_sentences):
 def remove_new_line_and_tabs(list_of_sentences):
     temp = []
     for i in list_of_sentences:
-        a = ' '.join(i.split())
+        if i[-1] == '\n':
+            i = i[:-1]
+        if i[0] == '\t':
+            i = i[1::]
         temp.append(i)
     return temp
 
@@ -101,7 +104,7 @@ test_file_sentences = test_corpus_new_line_cleanse(test_file.readlines())
 # print(test_file_sentences[1])
 test_file_sentences = sentence_formatting(test_file_sentences)
 
-pprint(test_file_sentences[-1])
+print(test_file_sentences)
 
 # print(emissions_dict_matcher("left", emissions))
 
