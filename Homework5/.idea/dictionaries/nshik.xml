@@ -3,6 +3,7 @@
     <words>
       <w>ngrams</w>
       <w>shikanai</w>
+      <w>viterbi</w>
     </words>
   </dictionary>
 </component>

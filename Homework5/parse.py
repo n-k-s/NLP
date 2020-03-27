@@ -20,6 +20,13 @@ def split_tags(tags_list):
     return return_non_terminals
 
 
+def split_words(words_list):
+    return_non_terminals = []
+    for i in words_list:
+        a = re.split("/", i)
+        return_non_terminals.append(a[0])
+    return return_non_terminals
+
 def test_corpus_new_line_cleanse(sentences_in_list):
     temp = []
     for n, i in enumerate(sentences_in_list):
@@ -96,10 +103,83 @@ def transmissions(list_of_tags, given1, given2, trigrams_dict):
     return transmission_probabilities
 
 
-def veterbi():
-    # pi table 0=k_index 1=u 2=v 3=pi 4=bp
-    pi_table = [[0],["*"],["*"],[""]]
+def all_tags_in_a_sentence(sentence_list):
+    all_unique_tags = []
+    # separating the words from the tags
+    temp = []
+    for i in sentence_list[1:]:
+        temp.append(re.split("[/]", i)[1])
+    for i in temp:
+        if i not in all_unique_tags:
+            all_unique_tags.append(i)
+    return all_unique_tags
 
+def all_words_in_a_sentence(sentence_list):
+    all_unique_words = []
+    # separating the words from the tags
+    temp = []
+    for i in sentence_list[1:]:
+        temp.append(re.split("[/]", i)[0])
+    for i in temp:
+        if i not in all_unique_words:
+            all_unique_words.append(i)
+    return all_unique_words
+
+def sentence_string_to_list(sentence):
+    # starts from element 1
+    sentence_list = [""]
+    a = sentence.split()
+    for i in a:
+        sentence_list.append(i)
+
+    # removing stars and STOP
+    sentence_list.remove(sentence_list[1])
+    sentence_list.remove(sentence_list[1])
+    sentence_list.remove(sentence_list[-1])
+    return sentence_list
+
+
+def creating_all_emissions_dict(unique_tags_in_list, unique_words_in_list, emissions):
+    # print(emissions_dict_matcher("left", emissions))
+    the_dict = {}
+    for n in unique_words_in_list:
+        for a in unique_tags_in_list:
+            unique_word_count = 0
+            word_tag_combo = n + "/" + a
+            if word_tag_combo in emissions:
+                unique_word_count += int(emissions[word_tag_combo])
+                the_dict[word_tag_combo] = int(emissions[word_tag_combo])
+            else:
+                the_dict[word_tag_combo] = 0
+        if unique_word_count > 0:
+            for k in the_dict:
+                # print(the_dict[k])
+                the_dict[k] = the_dict[k] / unique_word_count
+                # print(unique_word_count)
+                # print("###")
+    return the_dict
+
+def emissions_probability(ep_emissions):
+    for i in emissions:
+        if re.match("^in[/]", i):
+            print(i)
+            print(emissions[i])
+
+def viterbi(sentence_string, v_transmissions, v_emissions):
+    # viterbi algorithm takes one sentence at a time
+    # pass in the sentence as a string WITH stars and STOP in the file
+
+    # pi table 0=k_index 1=u 2=v 3=pi 4=bp
+    pi_table = [[0], ["*"], ["*"], [""]]
+    # words start from index 1
+
+    sentence_in_list = sentence_string_to_list(sentence_string)
+    all_tags = all_tags_in_a_sentence(sentence_in_list)
+    all_words = all_words_in_a_sentence(sentence_in_list)
+    emissions_dict = creating_all_emissions_dict(all_tags, all_words, v_emissions)
+    #pprint(emissions_dict)
+    # print(sentence_in_list)
+    # if sentence 37 long, go from 1 to 36
     return -1
 
 
@@ -116,6 +196,7 @@ training_split = training_file.split()
 #### training files ####
 emissions = Counter(training_split)
 non_terminals = Counter(split_tags(training_split))
+unique_words = Counter(split_words(training_split))
 two_non_terminals = Counter(ngrams(split_tags(training_split), 2))
 three_non_terminals = Counter(ngrams(split_tags(training_split), 3))
 
@@ -135,9 +216,19 @@ for i in train_file_sentences_formatted:
 
 transmissions_trigram_dictionary = Counter(pre_ttd)
 
-print(emissions_dict_matcher("left", emissions))
-print(transmissions(["nn", "jj", "pps"], "*", "*", transmissions_trigram_dictionary))
+# print(emissions_dict_matcher("left", emissions))
 
-pprint(test_file_sentences_formatted)
+# print(transmissions(["nn", "jj", "pps"], "*", "*", transmissions_trigram_dictionary))
+# pprint(test_file_sentences_formatted[1].split()[2:-1])
+
+
+viterbi_emissions_probability = emissions_probability(emissions, unique_words)
+
+# TODO change from one sentence to iterate through entire list
+print(viterbi(test_file_sentences_formatted[1], transmissions_trigram_dictionary, emissions))
+# TODO delete this pls
+# print(viterbi("*/* */* ass/a bass/b ass/c ass/a ass/a bass/z STOP/STOP", transmissions_trigram_dictionary, emissions))
+
+
 
 #### test files ####
