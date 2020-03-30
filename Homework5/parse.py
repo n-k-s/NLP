@@ -104,16 +104,24 @@ def transmissions(list_of_tags, given1, given2, trigrams_dict):
     return transmission_probabilities
 
 
-def all_tags_in_a_sentence(sentence_list):
-    all_unique_tags = []
-    # separating the words from the tags
-    temp = []
-    for i in sentence_list[1:]:
-        temp.append(re.split("[/]", i)[1])
-    for i in temp:
-        if i not in all_unique_tags:
-            all_unique_tags.append(i)
-    return all_unique_tags
+def all_tags_in_a_sentence(emission_dict, words):
+    emission_of_list_of_words = {}
+    temp_words = []
+    for n in words:
+        rregex = ""
+        for a in n:
+            rregex += "[" + a + "]"
+        temp_words.append("^" + rregex + "[/]")
+    for i in emission_dict:
+        for j in temp_words:
+            if re.match(j, i):
+                emission_of_list_of_words[i] = emission_dict[i]
+    all_tags = []
+    for i in emission_of_list_of_words:
+        temp = re.split("/", i)[1]
+        if temp not in all_tags:
+            all_tags.append(temp)
+    return emission_of_list_of_words, all_tags
 
 
 def all_words_in_a_sentence(sentence_list):
@@ -168,8 +176,27 @@ def emissions_probability(ep_emissions, words):
     for n in words:
         regex_maker = "^" + n + "[/]"
         for o in temp_dict:
-            if re.match(regex_maker, o):
+            if re.match("[()]", n):
+                1
+            elif re.match(regex_maker, o):
                 print(o, temp_dict[o])
+
+def s_getter(number, tag_set):
+    if number < 1:
+        return ["*"]
+    else:
+        return tag_set
+
+def tag_sequence_of_sentence(sentence_string):
+    split = sentence_string.split()
+    sequence = []
+    for i in split:
+        sequence.append(re.split("/", i)[1])
+    return sequence
+
+def create_translations(tri_sequence, transmissions):
+    for i in transmissions:
+        print(i.split())
 
 
 def viterbi(sentence_string, v_transmissions, v_emissions):
@@ -181,10 +208,18 @@ def viterbi(sentence_string, v_transmissions, v_emissions):
     # words start from index 1
 
     sentence_in_list = sentence_string_to_list(sentence_string)
-    all_tags = all_tags_in_a_sentence(sentence_in_list)
     all_words = all_words_in_a_sentence(sentence_in_list)
-    emissions_dict = creating_all_emissions_dict(all_tags, all_words, v_emissions)
-    # pprint(emissions_dict)
+    # unique_emissions, all_tags = all_tags_in_a_sentence(v_emissions, all_words)
+    # pprint(unique_emissions)
+    # print(all_tags)
+
+
+    tags_in_order = tag_sequence_of_sentence(sentence_string)
+    tri_sequence = ngrams(tags_in_order, 3)
+    # print(tri_sequence)
+    # pprint(v_transmissions)
+    create_translations(tri_sequence,v_transmissions)
+
     # print(sentence_in_list)
     # if sentence 37 long, go from 1 to 36
     return -1
@@ -227,10 +262,6 @@ transmissions_trigram_dictionary = Counter(pre_ttd)
 
 # print(transmissions(["nn", "jj", "pps"], "*", "*", transmissions_trigram_dictionary))
 # pprint(test_file_sentences_formatted[1].split()[2:-1])
-
-
-emissions_probability(emissions, unique_words)
-
 
 
 # TODO change from one sentence to iterate through entire list
