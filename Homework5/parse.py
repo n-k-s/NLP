@@ -195,8 +195,45 @@ def tag_sequence_of_sentence(sentence_string):
     return sequence
 
 def create_translations(tri_sequence, transmissions):
+    tri_transmissions = []
     for i in transmissions:
-        print(i.split())
+        tri_transmissions.append(i.split())
+    tri_tags = tri_sequence
+    denominator = 0
+    for j in tri_transmissions:
+        if tri_tags[0] == j[0] and tri_tags[1] == j[1]:
+            match = j[0] + " " + j[1] + " " + j[2]
+            denominator += transmissions[match]
+    numerator = transmissions[tri_tags[0] + " " + tri_tags[1] + " " + tri_tags[2]]
+    if denominator == 0:
+        tri_tags.append(0)
+    else:
+        tri_tags.append(numerator / denominator)
+    return(tri_tags)
+
+def create_emissions(sequence, emissions):
+    bi_emissions = []
+    for i in emissions:
+        bi_emissions.append(re.split("/", i))
+    sequence = [re.split("/", sequence[0])[0], sequence[1]]
+    # print(sequence)
+    # pprint(emissions)
+    denominator = 0
+    match = ""
+    for j in bi_emissions:
+        if sequence[0] == j[0]:
+            match = j[0] + "/" + j[1]
+            # print(match)
+            denominator += emissions[match]
+        numerator = emissions[sequence[0] + "/" + sequence[1]]
+    if(sequence[0]) == "*":
+        return 1
+    elif denominator == 0:
+        return 0
+    else:
+        return numerator / denominator
+
+
 
 
 def viterbi(sentence_string, v_transmissions, v_emissions):
@@ -209,29 +246,58 @@ def viterbi(sentence_string, v_transmissions, v_emissions):
 
     sentence_in_list = sentence_string_to_list(sentence_string)
     all_words = all_words_in_a_sentence(sentence_in_list)
-    # unique_emissions, all_tags = all_tags_in_a_sentence(v_emissions, all_words)
+    unique_emissions, all_tags = all_tags_in_a_sentence(v_emissions, all_words)
     # pprint(unique_emissions)
     # print(all_tags)
-
 
     tags_in_order = tag_sequence_of_sentence(sentence_string)
     tri_sequence = ngrams(tags_in_order, 3)
     # print(tri_sequence)
     # pprint(v_transmissions)
-    create_translations(tri_sequence,v_transmissions)
+    # # # print(create_translations(tri_sequence,v_transmissions))
+
+    # pprint(v_emissions)
+    # input()
+    # pi table indexes
+    #   0   1   2   3   4
+    #   k   U   V   Pi  BP
+    #   0   *   *   1   ""
+    pi_table = [[0, "*", "*", 1, ""]]
+    for k in range(1,len(sentence_string.split())):
+        for u in s_getter(k-1, all_tags):
+            for v in s_getter(k, all_tags):
+                pi_max = -1
+                bp_max = ""
+                for w in s_getter(k - 2, all_tags):
+                    value = 0;
+                    pi_value = 0
+                    for pi in pi_table:
+                        if pi[0] == k - 1 and pi[1] == w and pi[2] == u:
+                            pi_value = pi[3]
+                    q = [w, u, v]
+                    e = [sentence_string.split()[k], v]
+                    # print(pi_value)
+                    # print(q)
+                    # print(e)
+                    q = create_translations(q, v_transmissions)[3]
+                    e = create_emissions(e, v_emissions)
+                    max_value = pi_value * q * e
+                    if max_value > pi_max:
+                        pi_max = max_value
+                        bp_max = w
+
+
 
     # print(sentence_in_list)
     # if sentence 37 long, go from 1 to 36
-    return -1
+    return "doesn't completely work, read comment on submission"
 
 
 # argv 0 program name, 1 training file, 2 test file
-# training_file = open(argv[1]).read()
-# test_file = open(argv[2])
-# TODO change this back to argv and not training text
-training_file = open("ca_train.txt").read()
-train_file = open("ca_train.txt")
-test_file = open("ca_test.txt")
+
+training_file = open(argv[1]).read()
+train_file = open(argv[1])
+test_file = open(argv[2])
 
 training_split = training_file.split()
 
@@ -266,8 +332,7 @@ transmissions_trigram_dictionary = Counter(pre_ttd)
 
 # TODO change from one sentence to iterate through entire list
 print(viterbi(test_file_sentences_formatted[1], transmissions_trigram_dictionary, emissions))
-# TODO delete this pls
-# print(viterbi("*/* */* ass/a bass/b ass/c ass/a ass/a bass/z STOP/STOP", transmissions_trigram_dictionary, emissions))
+
 
 
 #### test files ####
