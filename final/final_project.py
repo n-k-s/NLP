@@ -201,6 +201,8 @@ def disease_finder(likely_symptoms_lst):
             if j in disease_symptoms:
                 score += 2.0
                 matching += 1
+            else:
+                score -+ 1.0
         matching = matching / len(disease_symptoms)
         score = score * matching
         if score > most_likely[1]:
