@@ -131,7 +131,9 @@ symptoms = ["Fever", "Cough", "Light Headed", "Chills", "Tired"]
 
 
 def list_symptoms():
-    print("please list your symptoms")
+    print("please list your symptoms separated by commas")
+    print("i.e.")
+    print("I have a headache, my throat is sore, and a fever")
     return input()
 
 
@@ -166,16 +168,61 @@ def symptom_checker(symptom_dict, user_sentence):
             user_symptoms.append(top_symptom[0])
     print(user_symptoms)
 
+def symptom_checker_revised(user_list):
+    likely = []
+    for i in user_list:
+        if i in all_symptoms:
+            temp = [1.0, i]
+            likely.append(temp)
+            user_list.remove(i)
+    for i in user_list:
+        symptom = [0.0, ""]
+        for j in all_symptoms:
+            value = sentence_similarity(i,j)
+            if value > symptom[0]:
+                symptom[0] = value
+                symptom[1] = j
+        likely.append(symptom)
+    return likely
+
+def disease_finder(likely_symptoms_lst):
+    # Name of disease, score
+    most_likely = ["", 0.0]
+    for i in diseases_and_symptoms:
+        disease_symptoms = diseases_and_symptoms[i]
+        score = 0.0
+        matching = 0.0
+        zz_top = []
+        for x in likely_symptoms_lst:
+            zz_top.append(x[1])
+        for j in zz_top:
+            # print(j)
+            # print(disease_symptoms)
+            if j in disease_symptoms:
+                score += 2.0
+                matching += 1
+        matching = matching / len(disease_symptoms)
+        score = score * matching
+        if score > most_likely[1]:
+            most_likely[0] = i
+            most_likely[1] = score
+        # print(score)
+        # print(i)
+        # time.sleep(2)
+    return most_likely
+
+
+
 
 # for i in all_symptoms:
 #     print(str(sentence_similarity(i, "back pain")) + " SYMPTOM: " + i)
 
 
 cleaningRegex = "[,]|and|[ ]a |^my[ ]|^I |[ ]my[ ]|[ ]I[ ]|have "
-
-symptom_checker(all_symptoms, "my head hurts")
-
-print(sentence_similarity("headache", "bleeding"))
+#
+# symptom_checker(all_symptoms, "my head hurts")
+#
+# print(sentence_similarity("headache", "bleeding"))
 
 
 a = list_symptoms()
@@ -184,6 +231,13 @@ a = re.sub(" a "," ", a)
 b = re.split(cleaningRegex, a)
 a = []
 for i in b:
-    if len(i) > 0:
+    if len(i) > 0 and i != " ":
         a.append(i)
-print(a)
+
+
+
+# print(a)
+likely_symptoms = symptom_checker_revised(a)
+# print(likely_symptoms)
+likely_disease = disease_finder(likely_symptoms)
+print("Most likely diagnosis: " + likely_disease[0])
