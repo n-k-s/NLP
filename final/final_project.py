@@ -181,7 +181,7 @@ def symptom_checker_revised(user_list):
 def disease_finder(likely_symptoms_lst):
     # Name of disease, score
     most_likely = ["", 0.0]
-    print(likely_symptoms_lst)
+    # print(likely_symptoms_lst)
     for i in diseases_and_symptoms:
         disease_symptoms = diseases_and_symptoms[i]
         score = 0.0
@@ -202,9 +202,9 @@ def disease_finder(likely_symptoms_lst):
         if score > most_likely[1]:
             most_likely[0] = i
             most_likely[1] = score
-        print(score)
-        print(i)
-        time.sleep(2)
+        # print(score)
+        # print(i)
+        # time.sleep(2)
     return most_likely
 
 
